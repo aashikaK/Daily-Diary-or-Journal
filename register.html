@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Form</title>
+<style>
+body { background-color: #b8d6f5; margin: 0; font-family: sans-serif; }
+h1 { text-align: center; margin-top: 20px; color: #333; }
+.container {
+    background-color: #d3e8f1;
+    width: 400px;
+    padding: 30px;
+    margin: 50px auto;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+label { font-weight:bold; }
+form input {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+form button {
+    display: block;
+    width: 95%;
+    margin: 15px auto 0 auto;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-weight:bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+form button:hover { background-color: #45a049; }
+p { margin: 5px 0; }
+</style>
+</head>
+<body>
+
+<h1>Registration Form</h1>
+<div class="container">
+    <form action="register.php" method="post" onsubmit="return formValidate()" novalidate>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" placeholder="eg: emly23">
+        <p id="user-msg" style="color:red;"></p>
+
+        <label for="pw">Password:</label>
+        <p style="color:rgb(22, 1, 117)">(Must include at least a capital letter, a symbol, and a number.)</p>
+        <input type="password" name="password" id="pw" placeholder="eg: #$!@$2123asA">
+        <p id="pw-msg" style="color:red;"></p>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" placeholder="eg: emly@gmail.com">
+        <p id="email-msg" style="color:red;"></p>
+
+        <button type="submit" name="register">Registration</button>
+    </form>
+</div>
+
+<script>
+function formValidate(){
+
+    let username = document.getElementById("username").value.trim();
+    let password = document.getElementById("pw").value.trim();
+    let email = document.getElementById("email").value.trim();
+
+    let userMsg = document.getElementById("user-msg");
+    let pwMsg = document.getElementById("pw-msg");
+    let emailMsg = document.getElementById("email-msg");
+
+    userMsg.innerHTML = "";
+    pwMsg.innerHTML = "";
+    emailMsg.innerHTML = "";
+
+    let isValid = true;
+
+    if(username === "") { 
+        userMsg.innerHTML = "Username is required!"; 
+        isValid = false; 
+    }
+
+    let passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,16}$/;
+    if(password === "") {
+         pwMsg.innerHTML = "Password is required!";
+          isValid = false; 
+        }
+    else if(!passwordPattern.test(password)) {
+        pwMsg.innerHTML = "Password must have 1 capital letter, 1 number, 1 symbol, and be 8-16 chars long!"; 
+        isValid = false;
+    }
+
+    if(email === "") { 
+        emailMsg.innerHTML = "Email is required!"; 
+        isValid = false; 
+    }
+    else if(!email.includes('@') || email.startsWith('@')) {
+         emailMsg.innerHTML = "Please enter a valid email (cannot start with @)!"; 
+         isValid = false; 
+        }
+return isValid;
+};
+</script>
+
+</body>
+</html>
